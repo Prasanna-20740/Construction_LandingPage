@@ -64,9 +64,8 @@ const Testimonials = () => {
         {/* Testimonial Box Card */}
         <div className="testimonial-slider-wrap">
           <div className="testimonial-card">
-            {/* Avatar with yellow offset box */}
+            {/* Avatar with authentic yellow offset shadow */}
             <div className="testimonial-avatar-wrapper">
-              <div className="avatar-yellow-backdrop"></div>
               <img
                 src={current.avatar}
                 alt={current.name}
