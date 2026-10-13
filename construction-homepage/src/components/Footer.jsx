@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { FacebookIcon, TwitterIcon, InstagramIcon, YoutubeIcon } from './Icons.jsx';
 import footerLogoImg from '../assets/images/footer-logo-construction.png';
+import rowBgImg from '../assets/images/row-bg.jpg';
 
 const Footer = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -21,10 +22,15 @@ const Footer = () => {
   return (
     <footer id="site-footer" className="page-footer">
       {/* Main Footer Center Content */}
-      <div className="middle-footer">
+      <div 
+        className="middle-footer"
+        style={{
+          backgroundImage: `linear-gradient(180deg, rgba(31, 45, 61, 0.92) 0%, rgba(18, 26, 36, 0.96) 100%), url(${rowBgImg || '/images/row-bg.jpg'})`
+        }}
+      >
         <div className="container middle-footer-container">
           <div className="footer-logo-wrap">
-            <a href="#hero" onClick={scrollToTop} className="footer-logo-link">
+            <a href="#hero" onClick={scrollToTop} className="footer-logo-link" title="Construction 2 - XTRA Construction">
               <img
                 src={footerLogoImg || "/images/footer-logo-construction.png"}
                 alt="Construction 2 Footer Logo"

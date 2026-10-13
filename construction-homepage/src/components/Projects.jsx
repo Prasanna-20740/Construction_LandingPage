@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, Plus, X } from 'lucide-react';
+import { Eye, Plus, X, ExternalLink } from 'lucide-react';
 import p1 from '../assets/images/project-1.jpg';
 import p2 from '../assets/images/project-2.jpg';
 import p3 from '../assets/images/project-3.jpg';
@@ -12,6 +12,29 @@ import p8 from '../assets/images/project-8.jpg';
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [activeMobileCardId, setActiveMobileCardId] = useState(null);
+
+  React.useEffect(() => {
+    const handleOutsideClick = () => {
+      setActiveMobileCardId(null);
+    };
+    window.addEventListener('click', handleOutsideClick);
+    return () => window.removeEventListener('click', handleOutsideClick);
+  }, []);
+
+  const handleCardClick = (e, project) => {
+    e.stopPropagation();
+    if (window.innerWidth <= 1024) {
+      // Exactly ONE card chosen at a time
+      if (activeMobileCardId === project.id) {
+        setSelectedProject(project);
+      } else {
+        setActiveMobileCardId(project.id);
+      }
+    } else {
+      setSelectedProject(project);
+    }
+  };
 
   const filters = [
     'All',
@@ -134,9 +157,9 @@ const Projects = () => {
             <div
               key={project.id}
               className="project-grid-item"
-              onClick={() => setSelectedProject(project)}
+              onClick={(e) => handleCardClick(e, project)}
             >
-              <div className="project-card">
+              <div className={`project-card ${activeMobileCardId === project.id ? 'mobile-active' : ''}`}>
                 <img
                   src={project.image}
                   alt={project.title}
@@ -153,7 +176,8 @@ const Projects = () => {
                 <div className="project-hover-overlay">
                   <div className="overlay-icon-wrap">
                     <span className="project-action-icon">
-                      <Plus size={24} />
+                      <ExternalLink size={20} className="project-external-icon" />
+                      <Plus size={24} className="project-plus-icon" />
                     </span>
                   </div>
 

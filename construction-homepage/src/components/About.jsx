@@ -56,7 +56,7 @@ const About = () => {
             {points.map((point, index) => (
               <li key={index} className="checklist-item">
                 <span className="checklist-icon-wrap">
-                  <Check size={16} strokeWidth={3} />
+                  <Check size={18} strokeWidth={3.5} />
                 </span>
                 <span className="checklist-text">{point}</span>
               </li>

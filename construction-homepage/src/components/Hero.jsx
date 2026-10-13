@@ -45,10 +45,28 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 7000);
-    return () => clearInterval(timer);
+    const startTimer = () => {
+      if (window.innerWidth <= 768) {
+        setCurrentSlide(0);
+        return null;
+      }
+      return setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }, 7000);
+    };
+
+    let timer = startTimer();
+
+    const handleResize = () => {
+      if (timer) clearInterval(timer);
+      timer = startTimer();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      if (timer) clearInterval(timer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, [slides.length]);
 
   return (
@@ -102,11 +120,15 @@ const Hero = () => {
                         type="button"
                         className="btn-video-trigger"
                         onClick={() => setIsVideoModalOpen(true)}
+                        aria-label="Why choose us - Watch video"
                       >
                         <span className="video-icon-circle">
                           <Play size={16} fill="currentColor" />
                         </span>
-                        <span className="video-btn-text">Watch video</span>
+                        <span className="video-btn-text">
+                          <span className="video-text-desktop">Watch video</span>
+                          <span className="video-text-mobile">Why choose us?</span>
+                        </span>
                       </button>
                     ) : (
                       <a href="#services" className="btn btn-secondary hero-btn-sub">
