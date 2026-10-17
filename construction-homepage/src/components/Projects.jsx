@@ -14,6 +14,12 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeMobileCardId, setActiveMobileCardId] = useState(null);
 
+  const filtersRef = React.useRef(null);
+  const isDraggingRef = React.useRef(false);
+  const startXRef = React.useRef(0);
+  const scrollLeftRef = React.useRef(0);
+  const hasMovedRef = React.useRef(false);
+
   React.useEffect(() => {
     const handleOutsideClick = () => {
       setActiveMobileCardId(null);
@@ -21,6 +27,36 @@ const Projects = () => {
     window.addEventListener('click', handleOutsideClick);
     return () => window.removeEventListener('click', handleOutsideClick);
   }, []);
+
+  const handleFilterWheel = (e) => {
+    if (filtersRef.current && (e.deltaY !== 0 || e.deltaX !== 0)) {
+      if (window.innerWidth <= 768) {
+        filtersRef.current.scrollLeft += e.deltaY !== 0 ? e.deltaY : e.deltaX;
+      }
+    }
+  };
+
+  const handleMouseDown = (e) => {
+    if (window.innerWidth > 768 || !filtersRef.current) return;
+    isDraggingRef.current = true;
+    hasMovedRef.current = false;
+    startXRef.current = e.pageX - filtersRef.current.offsetLeft;
+    scrollLeftRef.current = filtersRef.current.scrollLeft;
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDraggingRef.current || !filtersRef.current) return;
+    const x = e.pageX - filtersRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.3;
+    if (Math.abs(walk) > 4) {
+      hasMovedRef.current = true;
+    }
+    filtersRef.current.scrollLeft = scrollLeftRef.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDraggingRef.current = false;
+  };
 
   const handleCardClick = (e, project) => {
     e.stopPropagation();
@@ -135,14 +171,30 @@ const Projects = () => {
         </div>
 
         {/* Filter Tabs */}
-        <div className="project-filters-wrap">
+        <div
+          ref={filtersRef}
+          className="project-filters-wrap"
+          onWheel={handleFilterWheel}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
+        >
           <ul className="project-filters-list">
             {filters.map((filter) => (
               <li key={filter}>
                 <button
                   type="button"
                   className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
-                  onClick={() => setActiveFilter(filter)}
+                  onClick={(e) => {
+                    if (hasMovedRef.current) {
+                      e.preventDefault();
+                      return;
+                    }
+                    setActiveFilter(filter);
+                    setActiveMobileCardId(null);
+                  }}
+                  aria-pressed={activeFilter === filter}
                 >
                   {filter}
                 </button>
@@ -155,7 +207,7 @@ const Projects = () => {
         <div className="projects-grid">
           {filteredProjects.map((project) => (
             <div
-              key={project.id}
+              key={`${project.id}-${activeFilter}`}
               className="project-grid-item"
               onClick={(e) => handleCardClick(e, project)}
             >
