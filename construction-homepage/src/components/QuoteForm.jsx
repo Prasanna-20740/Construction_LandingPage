@@ -217,7 +217,7 @@ const QuoteForm = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="quote-subject">Subject (required)</label>
+                <label htmlFor="quote-subject">Subject</label>
                 <input
                   type="text"
                   id="quote-subject"
@@ -232,7 +232,7 @@ const QuoteForm = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="quote-message">Your Message (required)</label>
+                <label htmlFor="quote-message">Your Message</label>
                 <textarea
                   id="quote-message"
                   name="message"
