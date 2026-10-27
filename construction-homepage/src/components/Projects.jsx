@@ -87,7 +87,7 @@ const Projects = () => {
       title: "Riverview Green Building",
       categories: ["Building", "Road Construction"],
       image: p1 || "/images/project-1.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/tick_tock-1-1-600x600.jpg",
+      fallback: "/images/project-1.jpg",
       year: "2024",
       location: "San Francisco, CA"
     },
@@ -96,7 +96,7 @@ const Projects = () => {
       title: "The Langham Hotel",
       categories: ["Building", "Construction"],
       image: p2 || "/images/project-2.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/personal_gift-1-600x600.jpg",
+      fallback: "/images/project-2.jpg",
       year: "2023",
       location: "Chicago, IL"
     },
@@ -105,7 +105,7 @@ const Projects = () => {
       title: "Villa Rustica Renovation",
       categories: ["Construction", "Road Construction"],
       image: p3 || "/images/project-3.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/portfolio7-1-600x600.jpg",
+      fallback: "/images/project-3.jpg",
       year: "2024",
       location: "Miami, FL"
     },
@@ -114,7 +114,7 @@ const Projects = () => {
       title: "Land Rustica Renovation",
       categories: ["Building", "Maintenance"],
       image: p4 || "/images/project-4.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/portfolio10-1-600x600.jpg",
+      fallback: "/images/project-4.jpg",
       year: "2023",
       location: "Austin, TX"
     },
@@ -123,7 +123,7 @@ const Projects = () => {
       title: "Kitchen And Living Room",
       categories: ["Architecture", "Building"],
       image: p5 || "/images/project-5.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/portfolio3-1-600x600.jpg",
+      fallback: "/images/project-5.jpg",
       year: "2024",
       location: "Seattle, WA"
     },
@@ -132,7 +132,7 @@ const Projects = () => {
       title: "House Under The Palms",
       categories: ["Construction", "Road Construction"],
       image: p6 || "/images/project-6.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/portfolio6-1-600x600.jpg",
+      fallback: "/images/project-6.jpg",
       year: "2023",
       location: "Los Angeles, CA"
     },
@@ -141,7 +141,7 @@ const Projects = () => {
       title: "Green House",
       categories: ["Construction", "Road Construction"],
       image: p7 || "/images/project-7.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/portfolio9-1-600x600.jpg",
+      fallback: "/images/project-7.jpg",
       year: "2024",
       location: "Denver, CO"
     },
@@ -150,7 +150,7 @@ const Projects = () => {
       title: "Inside renovation",
       categories: ["Construction", "Road Construction"],
       image: p8 || "/images/project-8.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/portfolio2-1-600x600.jpg",
+      fallback: "/images/project-8.jpg",
       year: "2023",
       location: "Boston, MA"
     }

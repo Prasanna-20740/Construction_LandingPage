@@ -21,7 +21,7 @@ const Services = () => {
       id: 1,
       title: "Building",
       icon: s1Img || "/images/s1.png",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/s1.png",
+      fallback: "/images/s1.png",
       description: "A building, or edifice, is a structure with a roof and walls standing permanently in one place, such as a house or factory.",
       link: "#quote"
     },
@@ -29,7 +29,7 @@ const Services = () => {
       id: 2,
       title: "Road Construction",
       icon: s2Img || "/images/s2.png",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/s2.png",
+      fallback: "/images/s2.png",
       description: "Road construction involves the use of asphalt, liquid asphalt, concrete, soil stabilization, rebar, paving and pavement recycling machines, and other road repair materials.",
       link: "#quote"
     },
@@ -37,7 +37,7 @@ const Services = () => {
       id: 3,
       title: "Maintenance",
       icon: s3Img || "/images/s3.png",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/s3.png",
+      fallback: "/images/s3.png",
       description: "All are assigned responsibilities relate to the maintenance mode, comprehensive lifecycle asset preservation and structural reliability.",
       link: "#quote"
     }
@@ -198,7 +198,7 @@ const Services = () => {
                 alt="Safety Icon"
                 className="callout-safety-icon"
                 onError={(e) => {
-                  e.currentTarget.src = "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/safety-icon.png";
+                  e.currentTarget.src = "/images/safety-icon.png";
                 }}
               />
             </div>

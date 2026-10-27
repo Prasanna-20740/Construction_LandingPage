@@ -25,6 +25,9 @@ const QuoteForm = () => {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please provide a valid email address.';
     }
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'Subject is required.';
+    }
     if (!formData.message.trim()) {
       newErrors.message = 'Please provide a message or project overview.';
     }
@@ -105,7 +108,7 @@ const QuoteForm = () => {
                 </div>
                 <div>
                   <span className="info-label">Inquiry Mailbox</span>
-                  <a href="mailto:info@xtratheme.com" className="info-value">info@xtratheme.com</a>
+                  <a href="mailto:info@apexbuild.com" className="info-value">info@apexbuild.com</a>
                 </div>
               </div>
 
@@ -152,14 +155,14 @@ const QuoteForm = () => {
             <form onSubmit={handleSubmit} noValidate className="quote-form-element">
               <div className="form-row-2col">
                 <div className="form-group">
-                  <label htmlFor="quote-name">Your Name (required)</label>
+                  <label htmlFor="quote-name">Your Name</label>
                   <input
                     type="text"
                     id="quote-name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="John Doe"
+                    placeholder=""
                     className={`form-input ${errors.name ? 'input-error' : ''}`}
                     required
                   />
@@ -167,14 +170,14 @@ const QuoteForm = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="quote-email">Your Email (required)</label>
+                  <label htmlFor="quote-email">Your Email</label>
                   <input
                     type="email"
                     id="quote-email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="john@example.com"
+                    placeholder=""
                     className={`form-input ${errors.email ? 'input-error' : ''}`}
                     required
                   />
@@ -191,7 +194,7 @@ const QuoteForm = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+1 (818) 000-0000"
+                    placeholder=""
                     className="form-input"
                   />
                 </div>
@@ -214,16 +217,18 @@ const QuoteForm = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="quote-subject">Subject</label>
+                <label htmlFor="quote-subject">Subject (required)</label>
                 <input
                   type="text"
                   id="quote-subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  placeholder="e.g. New Commercial Building Estimate"
-                  className="form-input"
+                  placeholder=""
+                  className={`form-input ${errors.subject ? 'input-error' : ''}`}
+                  required
                 />
+                {errors.subject && <span className="field-error-text">{errors.subject}</span>}
               </div>
 
               <div className="form-group">
@@ -234,7 +239,7 @@ const QuoteForm = () => {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Tell us about your project specifications, timeframe, and site details..."
+                  placeholder=""
                   className={`form-textarea ${errors.message ? 'input-error' : ''}`}
                   required
                 ></textarea>

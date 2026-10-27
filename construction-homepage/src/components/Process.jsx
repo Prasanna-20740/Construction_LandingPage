@@ -47,7 +47,7 @@ const Process = () => {
                 alt="Process of Construction"
                 className="process-main-img"
                 onError={(e) => {
-                  e.currentTarget.src = "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/process.jpg";
+                  e.currentTarget.src = "/images/process.jpg";
                 }}
               />
             </div>

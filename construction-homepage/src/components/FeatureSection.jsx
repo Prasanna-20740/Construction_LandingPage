@@ -127,7 +127,7 @@ const FeatureSection = () => {
               alt="Safety Helmet Icon"
               className="feature-helmet-icon"
               onError={(e) => {
-                e.currentTarget.src = "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/safety-icon.png";
+                e.currentTarget.src = "/images/safety-icon.png";
               }}
             />
           </div>

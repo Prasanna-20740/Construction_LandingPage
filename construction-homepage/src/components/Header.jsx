@@ -18,13 +18,69 @@ const Header = () => {
   const [pagesDropdownOpen, setPagesDropdownOpen] = useState(false);
   const [nestedDropdownOpen, setNestedDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeNav, setActiveNav] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
+
+      // Scroll Spy: identify active section based on scroll position
+      const sections = [
+        { id: 'hero', nav: 'hero' },
+        { id: 'features', nav: 'about' },
+        { id: 'about', nav: 'about' },
+        { id: 'services', nav: 'services' },
+        { id: 'process', nav: 'process' },
+        { id: 'projects', nav: 'projects' },
+        { id: 'quote', nav: 'quote' }
+      ];
+
+      // Near top of page
+      if (window.scrollY < 120) {
+        setActiveNav('hero');
+        return;
+      }
+
+      // Near bottom of page
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80) {
+        setActiveNav('quote');
+        return;
+      }
+
+      const scrollPosition = window.scrollY + 200;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sections[i].id);
+        if (element) {
+          const top = element.offsetTop;
+          if (scrollPosition >= top) {
+            setActiveNav(sections[i].nav);
+            break;
+          }
+        }
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Disable browser scroll restoration so page refresh always resets cleanly to top
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Always reset to top and activate Home on open / refresh
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+
+    setActiveNav('hero');
+    setIsScrolled(false);
   }, []);
 
   const handleSearchSubmit = (e) => {
@@ -37,7 +93,10 @@ const Header = () => {
   };
 
   const scrollToSection = (id) => {
-    setIsMobileMenuOpen(false);
+    setActiveNav(id);
+    setTimeout(() => {
+      setIsMobileMenuOpen(false);
+    }, 260);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -83,10 +142,10 @@ const Header = () => {
             <a href="#hero" onClick={() => scrollToSection('hero')} className="logo-link">
               <img
                 src={logoConstructionImg || "/images/logo-construction.png"}
-                alt="Construction 2 - Building and Maintenance"
+                alt="Apex Build & Construction"
                 className="site-logo"
                 onError={(e) => {
-                  e.currentTarget.src = "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/logo-construction.png";
+                  e.currentTarget.src = "/images/logo-construction.png";
                 }}
               />
             </a>
@@ -96,28 +155,49 @@ const Header = () => {
           <nav className="desktop-nav" aria-label="Main Navigation">
             <ul className="nav-menu">
               <li className="nav-item">
-                <a href="#hero" onClick={() => scrollToSection('hero')} className="nav-link active" title="Home">
+                <a
+                  href="#hero"
+                  onClick={() => scrollToSection('hero')}
+                  className={`nav-link ${activeNav === 'hero' ? 'active' : ''}`}
+                  title="Home"
+                >
                   <Home size={18} />
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#about" onClick={() => scrollToSection('about')} className="nav-link">
+                <a
+                  href="#about"
+                  onClick={() => scrollToSection('about')}
+                  className={`nav-link ${activeNav === 'about' ? 'active' : ''}`}
+                >
                   About
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#services" onClick={() => scrollToSection('services')} className="nav-link">
+                <a
+                  href="#services"
+                  onClick={() => scrollToSection('services')}
+                  className={`nav-link ${activeNav === 'services' ? 'active' : ''}`}
+                >
                   Services
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#process" onClick={() => scrollToSection('process')} className="nav-link">
-                  Process
+                <a
+                  href="#process"
+                  onClick={() => scrollToSection('process')}
+                  className={`nav-link ${activeNav === 'process' ? 'active' : ''}`}
+                >
+                  FAQ
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#projects" onClick={() => scrollToSection('projects')} className="nav-link">
-                  Projects
+                <a
+                  href="#projects"
+                  onClick={() => scrollToSection('projects')}
+                  className={`nav-link ${activeNav === 'projects' ? 'active' : ''}`}
+                >
+                  Blog
                 </a>
               </li>
               <li
@@ -127,8 +207,11 @@ const Header = () => {
               >
                 <button
                   type="button"
-                  className="nav-link dropdown-toggle"
-                  onClick={() => setPagesDropdownOpen(!pagesDropdownOpen)}
+                  className={`nav-link dropdown-toggle ${activeNav === 'pages' ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveNav('pages');
+                    setPagesDropdownOpen(!pagesDropdownOpen);
+                  }}
                   aria-expanded={pagesDropdownOpen}
                 >
                   Pages
@@ -137,11 +220,66 @@ const Header = () => {
 
                 {pagesDropdownOpen && (
                   <ul className="dropdown-menu">
-                    <li><a href="#projects" onClick={() => scrollToSection('projects')}>Shop</a></li>
-                    <li><a href="#quote" onClick={() => scrollToSection('quote')}>Cart</a></li>
-                    <li><a href="#testimonials" onClick={() => scrollToSection('testimonials')}>Wishlist</a></li>
-                    <li><a href="#quote" onClick={() => scrollToSection('quote')}>My account</a></li>
-                    <li><a href="#services" onClick={() => scrollToSection('services')}>Submenu example</a></li>
+                    <li>
+                      <a
+                        href="#projects"
+                        onClick={() => {
+                          scrollToSection('projects');
+                          setPagesDropdownOpen(false);
+                        }}
+                        className={activeNav === 'projects' ? 'active' : ''}
+                      >
+                        Shop
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#quote"
+                        onClick={() => {
+                          scrollToSection('quote');
+                          setPagesDropdownOpen(false);
+                        }}
+                        className={activeNav === 'quote' ? 'active' : ''}
+                      >
+                        Cart
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#testimonials"
+                        onClick={() => {
+                          scrollToSection('testimonials');
+                          setPagesDropdownOpen(false);
+                        }}
+                        className={activeNav === 'testimonials' ? 'active' : ''}
+                      >
+                        Wishlist
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#quote"
+                        onClick={() => {
+                          scrollToSection('quote');
+                          setPagesDropdownOpen(false);
+                        }}
+                        className={activeNav === 'quote' ? 'active' : ''}
+                      >
+                        My account
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#services"
+                        onClick={() => {
+                          scrollToSection('services');
+                          setPagesDropdownOpen(false);
+                        }}
+                        className={activeNav === 'services' ? 'active' : ''}
+                      >
+                        Submenu example
+                      </a>
+                    </li>
                     <li
                       className="nested-dropdown-item"
                       onMouseEnter={() => setNestedDropdownOpen(true)}
@@ -157,8 +295,32 @@ const Header = () => {
                       </button>
                       {nestedDropdownOpen && (
                         <ul className="sub-nested-menu">
-                          <li><a href="#services" onClick={() => scrollToSection('services')}>Submenu 1</a></li>
-                          <li><a href="#process" onClick={() => scrollToSection('process')}>Submenu 2</a></li>
+                          <li>
+                            <a
+                              href="#services"
+                              onClick={() => {
+                                scrollToSection('services');
+                                setPagesDropdownOpen(false);
+                                setNestedDropdownOpen(false);
+                              }}
+                              className={activeNav === 'services' ? 'active' : ''}
+                            >
+                              Submenu 1
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="#process"
+                              onClick={() => {
+                                scrollToSection('process');
+                                setPagesDropdownOpen(false);
+                                setNestedDropdownOpen(false);
+                              }}
+                              className={activeNav === 'process' ? 'active' : ''}
+                            >
+                              Submenu 2
+                            </a>
+                          </li>
                         </ul>
                       )}
                     </li>
@@ -166,7 +328,11 @@ const Header = () => {
                 )}
               </li>
               <li className="nav-item">
-                <a href="#quote" onClick={() => scrollToSection('quote')} className="nav-link">
+                <a
+                  href="#quote"
+                  onClick={() => scrollToSection('quote')}
+                  className={`nav-link ${activeNav === 'quote' ? 'active' : ''}`}
+                >
                   Contact
                 </a>
               </li>
@@ -247,10 +413,10 @@ const Header = () => {
           <div className="drawer-header">
             <img
               src={logoConstructionImg || "/images/logo-construction.png"}
-              alt="Logo"
+              alt="Apex Build & Construction"
               className="drawer-logo"
               onError={(e) => {
-                e.currentTarget.src = "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/logo-construction.png";
+                e.currentTarget.src = "/images/logo-construction.png";
               }}
             />
             <button
@@ -280,45 +446,128 @@ const Header = () => {
 
           <ul className="drawer-nav-list">
             <li>
-              <a href="#hero" onClick={() => scrollToSection('hero')}>
+              <a
+                href="#hero"
+                onClick={() => scrollToSection('hero')}
+                className={activeNav === 'hero' ? 'active' : ''}
+              >
                 <Home size={18} className="drawer-nav-icon" /> Home
               </a>
             </li>
             <li>
-              <a href="#about" onClick={() => scrollToSection('about')}>About</a>
+              <a
+                href="#about"
+                onClick={() => scrollToSection('about')}
+                className={activeNav === 'about' ? 'active' : ''}
+              >
+                About
+              </a>
             </li>
             <li>
-              <a href="#services" onClick={() => scrollToSection('services')}>Services</a>
+              <a
+                href="#services"
+                onClick={() => scrollToSection('services')}
+                className={activeNav === 'services' ? 'active' : ''}
+              >
+                Services
+              </a>
             </li>
             <li>
-              <a href="#process" onClick={() => scrollToSection('process')}>Process</a>
+              <a
+                href="#process"
+                onClick={() => scrollToSection('process')}
+                className={activeNav === 'process' ? 'active' : ''}
+              >
+                FAQ
+              </a>
             </li>
             <li>
-              <a href="#projects" onClick={() => scrollToSection('projects')}>Projects</a>
+              <a
+                href="#projects"
+                onClick={() => scrollToSection('projects')}
+                className={activeNav === 'projects' ? 'active' : ''}
+              >
+                Blog
+              </a>
             </li>
             <li>
+
+
+
+
               <div className="drawer-dropdown-item">
                 <button
                   type="button"
-                  className="drawer-dropdown-toggle"
-                  onClick={() => setPagesDropdownOpen(!pagesDropdownOpen)}
+                  className={`drawer-dropdown-toggle ${activeNav === 'pages' ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveNav('pages');
+                    setPagesDropdownOpen(!pagesDropdownOpen);
+                  }}
                 >
                   Pages
                   <ChevronDown size={16} className={pagesDropdownOpen ? 'rotate-180' : ''} />
                 </button>
                 {pagesDropdownOpen && (
                   <ul className="drawer-sub-menu">
-                    <li><a href="#projects" onClick={() => scrollToSection('projects')}>Shop</a></li>
-                    <li><a href="#quote" onClick={() => scrollToSection('quote')}>Cart</a></li>
-                    <li><a href="#testimonials" onClick={() => scrollToSection('testimonials')}>Wishlist</a></li>
-                    <li><a href="#quote" onClick={() => scrollToSection('quote')}>My account</a></li>
-                    <li><a href="#services" onClick={() => scrollToSection('services')}>Submenu example</a></li>
+                    <li>
+                      <a
+                        href="#projects"
+                        onClick={() => scrollToSection('projects')}
+                        className={activeNav === 'projects' ? 'active' : ''}
+                      >
+                        Shop
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#quote"
+                        onClick={() => scrollToSection('quote')}
+                        className={activeNav === 'quote' ? 'active' : ''}
+                      >
+                        Cart
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#testimonials"
+                        onClick={() => scrollToSection('testimonials')}
+                        className={activeNav === 'testimonials' ? 'active' : ''}
+                      >
+                        Wishlist
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#quote"
+                        onClick={() => scrollToSection('quote')}
+                        className={activeNav === 'quote' ? 'active' : ''}
+                      >
+                        My account
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#services"
+                        onClick={() => scrollToSection('services')}
+                        className={activeNav === 'services' ? 'active' : ''}
+                      >
+                        Submenu example
+                      </a>
+                    </li>
                   </ul>
                 )}
               </div>
             </li>
             <li>
-              <a href="#quote" onClick={() => scrollToSection('quote')}>Contact</a>
+
+              
+              <a
+                href="#quote"
+                onClick={() => scrollToSection('quote')}
+                className={activeNav === 'quote' ? 'active' : ''}
+              >
+                Contact
+              </a>
             </li>
           </ul>
 

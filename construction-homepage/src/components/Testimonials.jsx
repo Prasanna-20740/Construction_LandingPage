@@ -13,7 +13,7 @@ const Testimonials = () => {
       name: "Richard Dowson",
       role: "Commercial Developer",
       avatar: team1 || "/images/team1.jpg",
-      fallbackAvatar: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/team1.jpg",
+      fallbackAvatar: "/images/team1.jpg",
       quote: "Great Experience!! Michael has made the whole process easy from the planning stage to the final plant going in. Steve & his crew did a great job. I felt like Lavish Gardens really listened to what I wanted, gave me ideas, and helped me decide how to make my backyard a place to relax and enjoy the view."
     },
     {
@@ -21,7 +21,7 @@ const Testimonials = () => {
       name: "Lisa Jordan",
       role: "Operations Director, SPS Towers",
       avatar: team2 || "/images/team2.jpg",
-      fallbackAvatar: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/team2.jpg",
+      fallbackAvatar: "/images/team2.jpg",
       quote: "I just wanted to say thank you to all of you for being so fun to work with and being rock stars with the best attitudes EVER on this 16th floor build for SPS. It means a great deal to me that you all come to the table every week with smiles on your faces and ready to solve whatever issue."
     },
     {
@@ -29,7 +29,7 @@ const Testimonials = () => {
       name: "Michael Anderson",
       role: "West End Center Office Park",
       avatar: team3 || "/images/team3.jpg",
-      fallbackAvatar: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/team3.jpg",
+      fallbackAvatar: "/images/team3.jpg",
       quote: "Greiner has been a critical partner to us on the redevelopment of West End Center Office Park. The team of project managers, supervisors, and their support teams can't be rivaled by any other contractor I have worked with over the past 15 years."
     }
   ];
@@ -56,7 +56,7 @@ const Testimonials = () => {
       <div className="container testimonials-container">
         {/* Section Heading */}
         <div className="section-title-wrap text-center">
-          <span className="watermark-text">CLIENTS</span>
+          <span className="watermark-text">TESTIMONIALS</span>
           <p className="section-subtitle">SEE WHAT SAYS OUR HAPPY CLIENTS</p>
           <h2 className="section-title">Our happy customers</h2>
         </div>

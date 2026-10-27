@@ -30,13 +30,13 @@ const Footer = () => {
       >
         <div className="container middle-footer-container">
           <div className="footer-logo-wrap">
-            <a href="#hero" onClick={scrollToTop} className="footer-logo-link" title="Construction 2 - XTRA Construction">
+            <a href="#hero" onClick={scrollToTop} className="footer-logo-link" title="Apex Build & Construction">
               <img
                 src={footerLogoImg || "/images/footer-logo-construction.png"}
-                alt="Construction 2 Footer Logo"
+                alt="Apex Build & Construction Footer Logo"
                 className="footer-logo-img"
                 onError={(e) => {
-                  e.currentTarget.src = "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/footer-logo-construction.png";
+                  e.currentTarget.src = "/images/footer-logo-construction.png";
                 }}
               />
             </a>
@@ -55,7 +55,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="footer-social-btn"
+              className="footer-social-btn footer-facebook"
             >
               <FacebookIcon size={18} />
             </a>
@@ -64,7 +64,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter"
-              className="footer-social-btn"
+              className="footer-social-btn footer-twitter"
             >
               <TwitterIcon size={18} />
             </a>
@@ -73,7 +73,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="footer-social-btn"
+              className="footer-social-btn footer-instagram"
             >
               <InstagramIcon size={18} />
             </a>
@@ -82,7 +82,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="footer-social-btn"
+              className="footer-social-btn footer-youtube"
             >
               <YoutubeIcon size={18} />
             </a>
@@ -94,7 +94,7 @@ const Footer = () => {
       <div className="bottom-footer">
         <div className="container bottom-footer-container">
           <div className="footer-copyright">
-            © 2026 XTRA, Powered by WordPress
+            © 2026 Apex Build & Construction. All rights reserved.
           </div>
 
           <div className="footer-legal-links">

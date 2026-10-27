@@ -19,10 +19,10 @@ const About = () => {
             <div className="about-yellow-backdrop"></div>
             <img
               src={aboutCompanyImg || "/images/about-company.jpg"}
-              alt="About XTRA Construction Company"
+              alt="About Apex Build & Construction"
               className="about-main-image"
               onError={(e) => {
-                e.currentTarget.src = "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/about-company.jpg";
+                e.currentTarget.src = "/images/about-company.jpg";
               }}
             />
             <div className="about-experience-badge">

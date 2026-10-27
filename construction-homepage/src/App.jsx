@@ -10,6 +10,7 @@ import QuoteForm from './components/QuoteForm.jsx';
 import Testimonials from './components/Testimonials.jsx';
 import ClientLogos from './components/ClientLogos.jsx';
 import Footer from './components/Footer.jsx';
+import CookieBar from './components/CookieBar.jsx';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <ClientLogos />
       </main>
       <Footer />
+      <CookieBar />
     </div>
   );
 }

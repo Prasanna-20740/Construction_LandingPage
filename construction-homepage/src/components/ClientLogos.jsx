@@ -7,11 +7,11 @@ import logo5 from '../assets/images/logo-5.png';
 
 const ClientLogos = () => {
   const logos = [
-    { id: 1, name: "Partner 1", src: logo1 || "/images/logo-1.png", fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2021/02/logo-1.png" },
-    { id: 2, name: "Partner 2", src: logo2 || "/images/logo-2.png", fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2021/02/logo-2.png" },
-    { id: 3, name: "Partner 3", src: logo3 || "/images/logo-3.png", fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2021/02/logo-3.png" },
-    { id: 4, name: "Partner 4", src: logo4 || "/images/logo-4.png", fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2021/02/logo-4.png" },
-    { id: 5, name: "Partner 5", src: logo5 || "/images/logo-5.png", fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2021/02/logo-5.png" }
+    { id: 1, name: "Partner 1", tooltip: "Construction Company", src: logo1 || "/images/logo-1.png", fallback: "/images/logo-1.png" },
+    { id: 2, name: "Partner 2", tooltip: "Construction Company", src: logo2 || "/images/logo-2.png", fallback: "/images/logo-2.png" },
+    { id: 3, name: "Partner 3", tooltip: "Construction Company", src: logo3 || "/images/logo-3.png", fallback: "/images/logo-3.png" },
+    { id: 4, name: "Partner 4", tooltip: "Construction Company", src: logo4 || "/images/logo-4.png", fallback: "/images/logo-4.png" },
+    { id: 5, name: "Partner 5", tooltip: "Construction Company", src: logo5 || "/images/logo-5.png", fallback: "/images/logo-5.png" }
   ];
 
   return (
@@ -20,7 +20,8 @@ const ClientLogos = () => {
         <div className="client-logos-wrapper">
           <div className="client-logos-grid">
             {logos.map((logo) => (
-              <div key={logo.id} className="client-logo-item">
+              <div key={logo.id} className="client-logo-item" tabIndex={0}>
+                <span className="client-logo-tooltip">{logo.tooltip}</span>
                 <img
                   src={logo.src}
                   alt={logo.name}

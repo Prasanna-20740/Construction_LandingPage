@@ -16,9 +16,11 @@ const Hero = () => {
       titleHighlight: "PROJECTS",
       description: "Don’t get framed by the competition, trust our solid reputation.",
       primaryBtnText: "START NEW PROJECTS",
+      primaryBtnLink: "#quote",
       secondaryBtnText: "Watch video",
+      secondaryBtnLink: null,
       image: manModelImg || "/images/man-model.png",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/man-model.png",
+      fallback: "/images/man-model.png",
       type: "model"
     },
     {
@@ -29,9 +31,11 @@ const Hero = () => {
       titleHighlight: "there are none",
       description: "Committed to superior quality, precision engineering and outstanding architectural results.",
       primaryBtnText: "EXPLORE SERVICES",
+      primaryBtnLink: "#services",
       secondaryBtnText: "REQUEST A QUOTE",
+      secondaryBtnLink: "#quote",
       image: slide2Img || "/images/slide-2.jpg",
-      fallback: "https://xtratheme.com/elementor/construction-2/wp-content/uploads/sites/41/2020/01/slide-2.jpg",
+      fallback: "/images/slide-2.jpg",
       type: "background"
     }
   ];
@@ -80,7 +84,7 @@ const Hero = () => {
               className={`hero-slide ${slide.type}-slide ${isActive ? 'active' : ''}`}
               style={
                 slide.type === 'background'
-                  ? { backgroundImage: `linear-gradient(rgba(36, 51, 68, 0.75), rgba(36, 51, 68, 0.85)), url(${slide.image})` }
+                  ? { backgroundImage: `linear-gradient(to right, rgba(27, 38, 51, 0.88) 0%, rgba(27, 38, 51, 0.65) 50%, rgba(27, 38, 51, 0.35) 100%), url(${slide.image})` }
                   : {}
               }
             >
@@ -110,7 +114,19 @@ const Hero = () => {
                   <p className="hero-description">{slide.description}</p>
 
                   <div className="hero-buttons">
-                    <a href="#quote" className="btn btn-primary hero-btn-main">
+                    <a
+                      href={slide.primaryBtnLink || "#services"}
+                      className="btn btn-primary hero-btn-main"
+                      onClick={(e) => {
+                        const targetId = (slide.primaryBtnLink || "#services").replace('#', '');
+                        const targetEl = document.getElementById(targetId);
+                        if (targetEl) {
+                          e.preventDefault();
+                          targetEl.scrollIntoView({ behavior: 'smooth' });
+                          window.history.pushState(null, '', `#${targetId}`);
+                        }
+                      }}
+                    >
                       {slide.primaryBtnText}
                       <ArrowRight size={18} className="btn-icon" />
                     </a>
@@ -131,7 +147,19 @@ const Hero = () => {
                         </span>
                       </button>
                     ) : (
-                      <a href="#services" className="btn btn-secondary hero-btn-sub">
+                      <a
+                        href={slide.secondaryBtnLink || "#quote"}
+                        className="btn btn-secondary hero-btn-sub"
+                        onClick={(e) => {
+                          const targetId = (slide.secondaryBtnLink || "#quote").replace('#', '');
+                          const targetEl = document.getElementById(targetId);
+                          if (targetEl) {
+                            e.preventDefault();
+                            targetEl.scrollIntoView({ behavior: 'smooth' });
+                            window.history.pushState(null, '', `#${targetId}`);
+                          }
+                        }}
+                      >
                         {slide.secondaryBtnText}
                       </a>
                     )}
